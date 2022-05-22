@@ -1,6 +1,8 @@
 package main
 
 import (
+	usercontroller "CaiNiaoTeam/userController"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,8 +18,7 @@ func initRouter(r *gin.Engine) {
 	// public directory is used to serve static resources
 	r.Static("/static", "./public")
 
-
 	apiRouter := r.Group("/douyin")
 
-	apiRouter.POST("/user/register/", userController.Register)
+	apiRouter.POST("/user/register/", usercontroller.Register)
 }
