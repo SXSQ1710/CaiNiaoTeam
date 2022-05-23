@@ -1,6 +1,6 @@
 package common
 
-//统一响应结构
+// Response 统一响应结构
 type Response struct {
 	StatusCode int32  `json:"status_code"`          //状态码，0-成功，其他值-失败
 	StatusMsg  string `json:"status_msg,omitempty"` //返回状态描述
@@ -24,8 +24,9 @@ type Comment struct {
 }
 
 type User struct {
-	Id            int64  `json:"id,omitempty"`
-	Name          string `json:"name,omitempty"`
+	Id            int64  `json:"id,omitempty" ;gorm:"primary_key;AUTO_INCREMENT"` //用户ID，自增
+	Token         string `gorm:"size:64"`                                         //用户鉴权，唯一标识用户
+	Name          string `json:"name,omitempty" ;gorm:"size:32"`                  //用户名
 	FollowCount   int64  `json:"follow_count,omitempty"`
 	FollowerCount int64  `json:"follower_count,omitempty"`
 	IsFollow      bool   `json:"is_follow,omitempty"`
