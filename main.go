@@ -21,5 +21,5 @@ func initRouter(r *gin.Engine) {
 
 	apiRouter.GET("/user/", usercontroller.UserInfo)
 	apiRouter.POST("/user/register/", usercontroller.Register)
-	//test
+	//test123131
 }
