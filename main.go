@@ -2,7 +2,6 @@ package main
 
 import (
 	usercontroller "CaiNiaoTeam/userController"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,5 +19,7 @@ func initRouter(r *gin.Engine) {
 
 	apiRouter := r.Group("/douyin")
 
+	apiRouter.GET("/user/", usercontroller.UserInfo)
 	apiRouter.POST("/user/register/", usercontroller.Register)
+	//test
 }
