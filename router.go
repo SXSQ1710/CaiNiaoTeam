@@ -3,6 +3,7 @@ package main
 import (
 	"CaiNiaoTeam/feedController"
 	"CaiNiaoTeam/userController"
+	"github.com/RaymondCode/simple-demo/controller"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,4 +18,6 @@ func initRouter(r *gin.Engine) {
 	apiRouter.POST("/user/login/", usercontroller.Login)
 
 	apiRouter.GET("/feed/", feedController.Feed)
+	apiRouter.POST("/publish/action/", controller.Publish)
+	apiRouter.GET("/publish/list/", controller.PublishList)
 }
