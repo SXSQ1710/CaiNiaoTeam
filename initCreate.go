@@ -7,15 +7,17 @@ import (
 )
 
 var CreateUserTable sync.Once
+var CreateVideoTable sync.Once
 
 func initCreatTable() {
-	CreateUserTable.Do(fn_creatUserTable) //创建user表，只运行一次
+	CreateUserTable.Do(fn_creatUserTable)   //创建user表，只运行一次
+	CreateVideoTable.Do(fn_creatVideoTable) //创建video表，只运行一次
 }
 
 func fn_creatUserTable() {
 	db := common.GetConnection()
 
-	if !(db.Migrator().HasTable("userinfo")) {
+	if !(db.Migrator().HasTable("users")) {
 		if err := db.Table("users").Migrator().CreateTable(&common.User{}); err != nil {
 			fmt.Println("fn_creatUserTable:" + err.Error())
 		}
@@ -23,4 +25,17 @@ func fn_creatUserTable() {
 	db.Exec("alter table users AUTO_INCREMENT = 10000")
 
 	fmt.Println("运行fn_creatUserTable")
+}
+
+func fn_creatVideoTable() {
+	db := common.GetConnection()
+
+	if !(db.Migrator().HasTable("video")) {
+		if err := db.Table("videos").Migrator().CreateTable(&common.Video{}); err != nil {
+			fmt.Println("fn_creatVideoTable:" + err.Error())
+		}
+	}
+	//db.Exec("alter table users AUTO_INCREMENT = 10000")
+
+	fmt.Println("运行fn_creatVideoTable")
 }

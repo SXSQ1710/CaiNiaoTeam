@@ -1,9 +1,8 @@
 package main
 
 import (
-	"CaiNiaoTeam/feedController"
 	"CaiNiaoTeam/userController"
-	"github.com/RaymondCode/simple-demo/controller"
+	"CaiNiaoTeam/voideController"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,7 +16,7 @@ func initRouter(r *gin.Engine) {
 	apiRouter.POST("/user/register/", usercontroller.Register)
 	apiRouter.POST("/user/login/", usercontroller.Login)
 
-	apiRouter.GET("/feed/", feedController.Feed)
-	apiRouter.POST("/publish/action/", controller.Publish)
-	apiRouter.GET("/publish/list/", controller.PublishList)
+	apiRouter.GET("/feed/", voideController.Feed)
+	apiRouter.GET("/publish/list/", voideController.PublishList)
+	apiRouter.GET("/favorite/list/", voideController.FavoriteList)
 }
