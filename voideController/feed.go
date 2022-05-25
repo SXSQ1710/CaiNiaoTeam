@@ -19,10 +19,20 @@ var AllVideoList = new([]common.Video)
 func Feed(c *gin.Context) {
 	AllVideoList := new([]common.Video)
 	db := common.GetConnection()
-	db.Find(&AllVideoList)
+	db.Preload("Author").Find(&AllVideoList)
+	//for _, video := range *AllVideoList {
+	//	db := common.GetConnection()
+	//	user := new(common.User)
+	//	db.Where("id = ?", video.AuthorId).Find(&user)
+	//	fmt.Println(user)
+	//}
 	c.JSON(http.StatusOK, FeedResponse{
 		Response:  common.Response{StatusCode: 0},
 		VideoList: *AllVideoList,
 		NextTime:  time.Now().Unix(),
 	})
+}
+
+func setVideoAuthor(video common.Video, user *common.User) {
+
 }
