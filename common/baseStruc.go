@@ -10,7 +10,7 @@ type Video struct {
 	Id            int64 `json:"id,omitempty" ;gorm:"primary_key;AUTO_INCREMENT"`
 	AuthorId      int64
 	Author        User   `json:"author" ;gorm:"foreignKey:AuthorId;references:Id;"`
-	PlayUrl       string `json:"play_url" json:"play_url,omitempty"`
+	PlayUrl       string `json:"play_url" json:"play_url,omitempty"` //通过本机网关访问本地文件
 	CoverUrl      string `json:"cover_url,omitempty"`
 	FavoriteCount int64  `json:"favorite_count,omitempty"`
 	CommentCount  int64  `json:"comment_count,omitempty"`
