@@ -12,6 +12,6 @@ func FavoriteList(c *gin.Context) {
 		Response: common.Response{
 			StatusCode: 0,
 		},
-		VideoList: *AllVideoList,
+		VideoList: AllVideoList,
 	})
 }

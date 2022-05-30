@@ -32,3 +32,11 @@ type User struct {
 	FollowerCount int64  `json:"follower_count,omitempty"`
 	IsFollow      bool   `json:"is_follow,omitempty"`
 }
+
+func (video *Video) SetPlayUrl(playUrl string) {
+	video.PlayUrl = playUrl
+}
+
+func (video *Video) SetCoverUrl(coverUrl string) {
+	video.CoverUrl = coverUrl
+}
