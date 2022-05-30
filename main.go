@@ -1,9 +1,12 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"CaiNiaoTeam/initSetting"
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
-	initCreatTable()
+	initSetting.InitCreatTable()
 
 	r := gin.Default()
 	initRouter(r)
