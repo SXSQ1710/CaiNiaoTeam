@@ -1,9 +1,7 @@
-package voideController
+package controller
 
 import (
 	"CaiNiaoTeam/common"
-	"CaiNiaoTeam/initSetting"
-
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
@@ -15,7 +13,7 @@ type FeedResponse struct {
 	NextTime  int64          `json:"next_time,omitempty"`
 }
 
-var VideoUrl = initSetting.VideoUrl
+var VideoUrl = common.VideoUrl
 var AllVideoList = make([]common.Video, 30)
 
 // Feed same demo video list for every request
