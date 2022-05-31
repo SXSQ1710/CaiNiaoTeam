@@ -1,7 +1,6 @@
 package common
 
 import (
-	"CaiNiaoTeam/initSetting"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -9,7 +8,7 @@ import (
 
 func GetConnection() *gorm.DB {
 	//mysql，dsn
-	dsn := initSetting.Dsn
+	dsn := Dsn
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {

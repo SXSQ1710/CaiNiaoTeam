@@ -1,8 +1,7 @@
 package main
 
 import (
-	"CaiNiaoTeam/userController"
-	"CaiNiaoTeam/voideController"
+	"CaiNiaoTeam/controller"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,11 +11,11 @@ func initRouter(r *gin.Engine) {
 
 	apiRouter := r.Group("/douyin")
 
-	apiRouter.GET("/user/", usercontroller.UserInfo)
-	apiRouter.POST("/user/register/", usercontroller.Register)
-	apiRouter.POST("/user/login/", usercontroller.Login)
+	apiRouter.GET("/user/", controller.UserInfo)
+	apiRouter.POST("/user/register/", controller.Register)
+	apiRouter.POST("/user/login/", controller.Login)
 
-	apiRouter.GET("/feed/", voideController.Feed)
-	apiRouter.GET("/publish/list/", voideController.PublishList)
-	apiRouter.GET("/favorite/list/", voideController.FavoriteList)
+	apiRouter.GET("/feed/", controller.Feed)
+	apiRouter.GET("/publish/list/", controller.PublishList)
+	apiRouter.GET("/favorite/list/", controller.FavoriteList)
 }

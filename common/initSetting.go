@@ -1,12 +1,15 @@
-package initSetting
+package common
 
 import (
-	"CaiNiaoTeam/common"
 	"fmt"
 	"sync"
 )
 
-var Dsn = "root:13824101958@tcp(localhost:3306)/godemo" //数据库dsn
+var Dsn = "root:13824101958@tcp(localhost:3306)/godemo1" //你自己数据库dsn
+
+var mySigningKey = []byte("qwacdfafaefa.") //你自己token加密解密的秘钥，可随便设置
+
+var SetTime int64 = 2 * 60 * 60 //token过期时间
 
 var VideoUrl = "http://10.34.152.157:8083/" //填写你本地资源的访问入口,我用的是nginx开启本地资源入口
 
@@ -18,10 +21,10 @@ func InitCreatTable() {
 }
 
 func fn_creatUserTable() {
-	db := common.GetConnection()
+	db := GetConnection()
 
 	if !(db.Migrator().HasTable("users")) {
-		if err := db.Table("users").Migrator().CreateTable(&common.User{}); err != nil {
+		if err := db.Table("users").Migrator().CreateTable(&User{}); err != nil {
 			fmt.Println("fn_creatUserTable:" + err.Error())
 		}
 	}
@@ -31,10 +34,10 @@ func fn_creatUserTable() {
 }
 
 func fn_creatVideoTable() {
-	db := common.GetConnection()
+	db := GetConnection()
 
 	if !(db.Migrator().HasTable("videos")) {
-		if err := db.Table("videos").Migrator().CreateTable(&common.Video{}); err != nil {
+		if err := db.Table("videos").Migrator().CreateTable(&Video{}); err != nil {
 			fmt.Println("fn_creatVideoTable:" + err.Error())
 		}
 	}

@@ -1,4 +1,4 @@
-package voideController
+package controller
 
 import (
 	"CaiNiaoTeam/common"

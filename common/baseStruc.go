@@ -26,7 +26,7 @@ type Comment struct {
 
 type User struct {
 	Id            int64  `json:"id,omitempty" ;gorm:"primary_key;AUTO_INCREMENT"` //用户ID，自增
-	Token         string `gorm:"size:64"`                                         //用户鉴权，唯一标识用户
+	IdPass        string `gorm:"size:64"`                                         //用户鉴权，唯一标识用户,现阶段数据库保存token
 	Name          string `json:"name,omitempty" ;gorm:"size:32"`                  //用户名
 	FollowCount   int64  `json:"follow_count,omitempty"`
 	FollowerCount int64  `json:"follower_count,omitempty"`
