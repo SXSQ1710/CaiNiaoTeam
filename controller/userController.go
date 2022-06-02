@@ -17,12 +17,7 @@ func UserInfo(c *gin.Context) {
 	token := c.Query("token")
 	user_id := c.Query("user_id")
 
-	fmt.Println(token)
 	id := common.TokenParse(token)
-
-	fmt.Println(user_id)
-	fmt.Println(id)
-	fmt.Println(id == user_id)
 
 	if id == user_id {
 		user := new(common.User)
@@ -94,7 +89,7 @@ func Register(c *gin.Context) {
 
 	user := new(common.User)
 	db := common.GetConnection()
-	out := db.Where("id_pass = ?", idPass).Find(&user)
+	out := db.Where("id_pass = ?", idPass).Find(&user) //从数据库中查询用户是否存在，直接查询idPass是否存在
 	//fmt.Printf("返回结果数目:%v\n", out.RowsAffected)
 
 	if out.RowsAffected == 1 {
