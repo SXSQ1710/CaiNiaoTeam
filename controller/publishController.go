@@ -16,10 +16,10 @@ type VideoListResponse struct {
 // PublishList all users have same publish video list
 func PublishList(c *gin.Context) {
 	token := c.Query("token")
-	user_id := c.Query("user_id")
+	userId := c.Query("user_id")
 
 	id := common.TokenParse(token)
-	if id == user_id {
+	if id == userId {
 
 		RefreshVideoList(AllVideoList)
 		c.JSON(http.StatusOK, VideoListResponse{
