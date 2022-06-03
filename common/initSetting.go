@@ -16,11 +16,11 @@ var VideoUrl = "http://10.34.152.157:8083/" //填写你本地资源的访问入�
 func InitCreatTable() {
 	var CreateUserTable sync.Once
 	var CreateVideoTable sync.Once
-	CreateUserTable.Do(fn_creatUserTable)   //创建user表，只运行一次
-	CreateVideoTable.Do(fn_creatVideoTable) //创建video表，只运行一次
+	CreateUserTable.Do(creatUserTable)   //创建user表，只运行一次
+	CreateVideoTable.Do(creatVideoTable) //创建video表，只运行一次
 }
 
-func fn_creatUserTable() {
+func creatUserTable() {
 	db := GetConnection()
 
 	if !(db.Migrator().HasTable("users")) {
@@ -33,7 +33,7 @@ func fn_creatUserTable() {
 	fmt.Println("运行fn_creatUserTable")
 }
 
-func fn_creatVideoTable() {
+func creatVideoTable() {
 	db := GetConnection()
 
 	if !(db.Migrator().HasTable("videos")) {
