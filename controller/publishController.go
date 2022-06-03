@@ -20,6 +20,8 @@ func PublishList(c *gin.Context) {
 
 	id := common.TokenParse(token)
 	if id == user_id {
+
+		RefreshVideoList(AllVideoList)
 		c.JSON(http.StatusOK, VideoListResponse{
 			Response: common.Response{
 				StatusCode: 0,
@@ -43,6 +45,7 @@ func PublishList(c *gin.Context) {
 
 // Publish check token then save upload file to public directory
 func Publish(c *gin.Context) {
+
 	token := c.PostForm("token")
 	title := c.PostForm("title")
 
