@@ -11,7 +11,7 @@ var mySigningKey = []byte("qwacdfafaefa.") //你自己token加密解密的秘钥
 
 var SetTime int64 = 2 * 60 * 60 //token过期时间
 
-var VideoUrl = "http://10.34.152.157:8083/" //填写你本地资源的访问入口,我用的是nginx开启本地资源入口
+var VideoUrl = "http://10.34.12.169:8083/" //填写你本地资源的访问入口,我用的是nginx开启本地资源入口
 
 func InitCreatTable() {
 	var CreateUserTable sync.Once
