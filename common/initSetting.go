@@ -18,6 +18,9 @@ func InitCreatTable() {
 	var CreateVideoTable sync.Once
 	CreateUserTable.Do(creatUserTable)   //创建user表，只运行一次
 	CreateVideoTable.Do(creatVideoTable) //创建video表，只运行一次
+	fmt.Println("-----------------------------")
+	fmt.Println("运行InitCreatTable")
+	fmt.Println("-----------------------------")
 }
 
 func creatUserTable() {
@@ -30,7 +33,6 @@ func creatUserTable() {
 	}
 	db.Exec("alter table users AUTO_INCREMENT = 10000") //id字段从10000开始自动自增
 
-	fmt.Println("运行fn_creatUserTable")
 }
 
 func creatVideoTable() {
@@ -42,5 +44,18 @@ func creatVideoTable() {
 		}
 	}
 
-	fmt.Println("运行fn_creatVideoTable")
+}
+
+func AddInitInfo() {
+	db := GetConnection()
+	user := new(User)
+	if db.Where("id_pass = ?", "SXSQ123456").Find(&user).RowsAffected == 0 {
+		db.Create(&User{IdPass: "SXSQ123456", Name: "SXSQ"}) //添加初始用户
+		db.Where("id_pass = ?", "SXSQ123456").Find(&user)
+		db.Create(&Video{AuthorId: user.Id, Title: "初始视频1", PlayUrl: "/video/10000_1.mp4", CoverUrl: "/img/10000_1.jpg"})
+		db.Create(&Video{AuthorId: user.Id, Title: "初始视频2", PlayUrl: "/video/10000_2.mp4", CoverUrl: "/img/10000_1.jpg"})
+		fmt.Println("-----------------------------")
+		fmt.Println("运行AddInitInfo")
+		fmt.Println("-----------------------------")
+	}
 }

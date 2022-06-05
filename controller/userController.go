@@ -85,7 +85,7 @@ func Register(c *gin.Context) {
 	username := c.Query("username")
 	password := c.Query("password")
 
-	idPass := username + password //用户身份鉴权认证
+	idPass := common.BuilderString(username, password) //用户身份鉴权认证
 
 	user := new(common.User)
 	db := common.GetConnection()
