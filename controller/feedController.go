@@ -21,8 +21,8 @@ func RefreshVideoList(list []common.Video) []common.Video {
 	db := common.GetConnection()
 	db.Preload("Author").Find(&list)
 	for i, video := range list {
-		list[i].SetPlayUrl(VideoUrl + "public" + video.PlayUrl)   //拼接视频真正的访问路径，
-		list[i].SetCoverUrl(VideoUrl + "public" + video.CoverUrl) //如"http://10.34.152.157:8083/"+"public"+"/img/1.jpg"
+		list[i].PlayUrl = VideoUrl + "public" + video.PlayUrl   //拼接视频真正的访问路径，
+		list[i].CoverUrl = VideoUrl + "public" + video.CoverUrl //如"http://10.34.152.157:8083/"+"public"+"/img/1.jpg"
 	}
 	return list
 }
@@ -35,4 +35,41 @@ func Feed(c *gin.Context) {
 		VideoList: AllVideoList,
 		NextTime:  time.Now().Unix(),
 	})
+}
+
+/**
+* 响应“/feed/”
+* 上面部分
+---------------------------------------------------分界线----------------------------------------------------------------
+* 下面部分
+* 测试
+**/
+
+func SetUrlA(list []common.Video) []common.Video {
+	for i, video := range list {
+		list[i].PlayUrl = VideoUrl + "public" + video.PlayUrl
+		list[i].CoverUrl = VideoUrl + "public" + video.CoverUrl
+		//list[i].SetPlayUrl(VideoUrl + "public" + video.PlayUrl)   //拼接视频真正的访问路径，
+		//list[i].SetCoverUrl(VideoUrl + "public" + video.CoverUrl) //如"http://10.34.152.157:8083/"+"public"+"/img/1.jpg"
+	}
+	return list
+
+}
+
+func SetUrlB(list []common.Video) []common.Video {
+	for i, video := range list {
+		//list[i].PlayUrl = VideoUrl + "public" + video.PlayUrl
+		//list[i].CoverUrl = VideoUrl + "public" + video.CoverUrl
+		list[i].SetPlayUrl(VideoUrl + "public" + video.PlayUrl)   //拼接视频真正的访问路径，
+		list[i].SetCoverUrl(VideoUrl + "public" + video.CoverUrl) //如"http://10.34.152.157:8083/"+"public"+"/img/1.jpg"
+	}
+	return list
+}
+
+func SetUrlTestA(list []common.Video) {
+	AllVideoList = SetUrlA(list)
+}
+
+func SetUrlTestB(list []common.Video) {
+	AllVideoList = SetUrlB(list)
 }
