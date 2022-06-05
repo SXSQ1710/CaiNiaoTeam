@@ -53,6 +53,7 @@ func SetUrlA(list []common.Video) []common.Video {
 		//list[i].SetCoverUrl(VideoUrl + "public" + video.CoverUrl) //如"http://10.34.152.157:8083/"+"public"+"/img/1.jpg"
 	}
 	return list
+
 }
 
 func SetUrlB(list []common.Video) []common.Video {
