@@ -18,20 +18,22 @@ func PublishList(c *gin.Context) {
 	token := c.Query("token")
 	userId := c.Query("user_id")
 
-	id := common.TokenParse(token)
-	if id == userId {
+	if len(token) != 0 {
+		id := common.TokenParse(token)
+		if id == userId {
 
-		RefreshVideoList(AllVideoList)
-		c.JSON(http.StatusOK, VideoListResponse{
-			Response: common.Response{
-				StatusCode: 0,
-			},
-			VideoList: AllVideoList,
-		})
-	} else {
-		c.JSON(http.StatusOK, UserResponse{
-			Response: common.Response{StatusCode: 1, StatusMsg: "用户信息错误！"},
-		})
+			RefreshVideoList(AllVideoList)
+			c.JSON(http.StatusOK, VideoListResponse{
+				Response: common.Response{
+					StatusCode: 0,
+				},
+				VideoList: AllVideoList,
+			})
+		} else {
+			c.JSON(http.StatusOK, UserResponse{
+				Response: common.Response{StatusCode: 1, StatusMsg: "用户信息错误！"},
+			})
+		}
 	}
 }
 
