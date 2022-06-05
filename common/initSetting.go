@@ -53,7 +53,7 @@ func AddInitInfo() {
 		db.Create(&User{IdPass: "SXSQ123456", Name: "SXSQ"}) //添加初始用户
 		db.Where("id_pass = ?", "SXSQ123456").Find(&user)
 		db.Create(&Video{AuthorId: user.Id, Title: "初始视频1", PlayUrl: "/video/10000_1.mp4", CoverUrl: "/img/10000_1.jpg"})
-		db.Create(&Video{AuthorId: user.Id, Title: "初始视频2", PlayUrl: "/video/10000_2.mp4", CoverUrl: "/img/10000_2.jpg"})
+		db.Create(&Video{AuthorId: user.Id, Title: "初始视频2", PlayUrl: "/video/10000_2.mp4", CoverUrl: "/img/10000_1.jpg"})
 		fmt.Println("-----------------------------")
 		fmt.Println("运行AddInitInfo")
 		fmt.Println("-----------------------------")
