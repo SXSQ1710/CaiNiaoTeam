@@ -18,29 +18,36 @@ type VideoListResponse struct {
 
 // PublishList all users have same publish video list
 func PublishList(c *gin.Context) {
-	token := c.Query("token")
-	userId := c.Query("user_id")
+	//token := c.Query("token")    //这里发现token没啥用
+	userId := c.Query("user_id") //这里的user_id是查询用户的id
 
-	if len(token) != 0 {
-		id := common.TokenParse(token)
-		if id == userId { //身份验证通过
-			AllVideoList = getUserVideoList(AllVideoList, userId)
-			c.JSON(http.StatusOK, VideoListResponse{
-				Response: common.Response{
-					StatusCode: 0,
-				},
-				VideoList: AllVideoList,
-			})
-		} else {
-			c.JSON(http.StatusOK, UserResponse{
-				Response: common.Response{StatusCode: 1, StatusMsg: "用户信息错误！"},
-			})
-		}
-	} else {
-		c.JSON(http.StatusOK, UserResponse{
-			Response: common.Response{StatusCode: 1, StatusMsg: "用户信息错误！"},
-		})
-	}
+	AllVideoList = getUserVideoList(AllVideoList, userId)
+	c.JSON(http.StatusOK, VideoListResponse{
+		Response: common.Response{
+			StatusCode: 0,
+		},
+		VideoList: AllVideoList,
+	})
+	//if len(token) != 0 {
+	//	id := common.TokenParse(token)
+	//	if id == userId { //身份验证通过
+	//		AllVideoList = getUserVideoList(AllVideoList, userId)
+	//		c.JSON(http.StatusOK, VideoListResponse{
+	//			Response: common.Response{
+	//				StatusCode: 0,
+	//			},
+	//			VideoList: AllVideoList,
+	//		})
+	//	} else {
+	//		c.JSON(http.StatusOK, UserResponse{
+	//			Response: common.Response{StatusCode: 1, StatusMsg: "用户信息错误！"},
+	//		})
+	//	}
+	//} else {
+	//	c.JSON(http.StatusOK, UserResponse{
+	//		Response: common.Response{StatusCode: 1, StatusMsg: "用户信息错误！"},
+	//	})
+	//}
 }
 
 // 获取用户所有发布视频的视频列表
