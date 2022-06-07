@@ -11,7 +11,8 @@ var mySigningKey = []byte("qwacdfafaefa.") //你自己token加密解密的秘钥
 
 var SetTime int64 = 2 * 60 * 60 //token过期时间
 
-var VideoUrl = "http://10.34.12.169:8083/" //填写你本地资源的访问入口,我用的是nginx开启本地资源入口
+var VideoUrl = "http://10.34.152.157:8083/"                          //填写你本地资源的访问入口,我用的是nginx开启本地资源入口
+var LocalUrl = "D:\\GolandProjects\\github.com\\CaiNiaoTeam\\public" //填写你视频和视频封面的本地地址
 
 func InitCreatTable() {
 	var CreateUserTable sync.Once
@@ -24,7 +25,7 @@ func InitCreatTable() {
 }
 
 func creatUserTable() {
-	db := GetConnection()
+	db := GetDB()
 
 	if !(db.Migrator().HasTable("users")) {
 		if err := db.Table("users").Migrator().CreateTable(&User{}); err != nil {
@@ -36,7 +37,7 @@ func creatUserTable() {
 }
 
 func creatVideoTable() {
-	db := GetConnection()
+	db := GetDB()
 
 	if !(db.Migrator().HasTable("videos")) {
 		if err := db.Table("videos").Migrator().CreateTable(&Video{}); err != nil {
@@ -47,7 +48,8 @@ func creatVideoTable() {
 }
 
 func AddInitInfo() {
-	db := GetConnection()
+	db := GetDB()
+
 	user := new(User)
 	if db.Where("id_pass = ?", "SXSQ123456").Find(&user).RowsAffected == 0 {
 		db.Create(&User{IdPass: "SXSQ123456", Name: "SXSQ"}) //添加初始用户

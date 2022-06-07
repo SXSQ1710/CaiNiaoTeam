@@ -21,7 +21,8 @@ func UserInfo(c *gin.Context) {
 
 	if id == user_id {
 		user := new(common.User)
-		common.GetConnection().Where("id = ?", user_id).Find(&user)
+		db := common.GetDB()
+		db.Where("id = ?", user_id).Find(&user)
 		c.JSON(http.StatusOK, UserResponse{
 			Response: common.Response{StatusCode: 0},
 			User:     *user,
@@ -46,7 +47,8 @@ func Login(c *gin.Context) {
 	password := c.Query("password")
 	idPass := username + password //数据库中可以唯一标识用户
 	user := new(common.User)
-	out := common.GetConnection().Where("id_pass = ?", idPass).Find(&user).RowsAffected
+	db := common.GetDB()
+	out := db.Where("id_pass = ? AND name = ?", idPass, username).Find(&user).RowsAffected
 
 	id := fmt.Sprintf("%d", user.Id)
 
@@ -88,7 +90,7 @@ func Register(c *gin.Context) {
 	idPass := common.BuilderString(username, password) //用户身份鉴权认证
 
 	user := new(common.User)
-	db := common.GetConnection()
+	db := common.GetDB()
 	out := db.Where("id_pass = ?", idPass).Find(&user) //从数据库中查询用户是否存在，直接查询idPass是否存在
 	//fmt.Printf("返回结果数目:%v\n", out.RowsAffected)
 

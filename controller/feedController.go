@@ -18,7 +18,7 @@ var AllVideoList = make([]common.Video, 15, 30) //存放视频列表信息
 
 // RefreshVideoList 刷新视频列表 TODO 待修饰
 func RefreshVideoList(list []common.Video) []common.Video {
-	db := common.GetConnection()
+	db := common.GetDB()
 	db.Preload("Author").Find(&list)
 	for i, video := range list {
 		list[i].PlayUrl = VideoUrl + "public" + video.PlayUrl   //拼接视频真正的访问路径，
