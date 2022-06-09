@@ -1,4 +1,4 @@
-# CaiNiaoTea
+# CaiNiaoTeam
  具体配置到common中的initStetting设置   
 > 注：数据库在初始化时会自动建表，每次更新可能会更改表的结构，若获取的最新版本在创建表时报错，将所有表删除即可
 ### 数据库使用mysql
