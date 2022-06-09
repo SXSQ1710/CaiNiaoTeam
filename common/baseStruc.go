@@ -18,6 +18,18 @@ type Video struct {
 	Title         string `json:"title,omitempty " ;gorm:"size:32;"`
 }
 
+type View_video_favorites struct {
+	Id            int64 `json:"id,omitempty" ;gorm:"primary_key;AUTO_INCREMENT"`
+	AuthorId      int64
+	Author        User   `json:"author" ;gorm:"foreignKey:AuthorId;references:Id;"`
+	PlayUrl       string `json:"play_url" json:"play_url,omitempty"` //通过本机网关访问本地文件
+	CoverUrl      string `json:"cover_url,omitempty"`
+	FavoriteCount int64  `json:"favorite_count,omitempty"`
+	CommentCount  int64  `json:"comment_count,omitempty"`
+	IsFavorite    bool   `json:"is_favorite,omitempty"`
+	Title         string `json:"title,omitempty " ;gorm:"size:32;"`
+}
+
 type Comment struct {
 	Id         int64  `json:"id,omitempty"`
 	User       User   `json:"user"`
@@ -34,10 +46,15 @@ type User struct {
 	IsFollow      bool   `json:"is_follow,omitempty"`
 }
 
-func (video *Video) SetPlayUrl(playUrl string) {
+func (video *View_video_favorites) SetPlayUrl(playUrl string) {
 	video.PlayUrl = playUrl
 }
 
-func (video *Video) SetCoverUrl(coverUrl string) {
+func (video *View_video_favorites) SetCoverUrl(coverUrl string) {
 	video.CoverUrl = coverUrl
+}
+
+type Favorite struct {
+	User_id  string `gorm:"primary_key"`
+	Video_id string `gorm:"primary_key"`
 }
