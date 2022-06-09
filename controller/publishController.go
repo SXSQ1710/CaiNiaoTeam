@@ -13,7 +13,7 @@ import (
 
 type VideoListResponse struct {
 	common.Response
-	VideoList []common.Video `json:"video_list"`
+	VideoList []common.View_video_favorites `json:"video_list"`
 }
 
 // PublishList all users have same publish video list
@@ -21,12 +21,12 @@ func PublishList(c *gin.Context) {
 	//token := c.Query("token")    //这里发现token没啥用
 	userId := c.Query("user_id") //这里的user_id是查询用户的id
 
-	AllVideoList = getUserVideoList(AllVideoList, userId)
+	userAllVideo := getUserVideoList(AllVideoList, userId)
 	c.JSON(http.StatusOK, VideoListResponse{
 		Response: common.Response{
 			StatusCode: 0,
 		},
-		VideoList: AllVideoList,
+		VideoList: userAllVideo,
 	})
 	//if len(token) != 0 {
 	//	id := common.TokenParse(token)
@@ -51,7 +51,7 @@ func PublishList(c *gin.Context) {
 }
 
 // 获取用户所有发布视频的视频列表
-func getUserVideoList(list []common.Video, user_id string) []common.Video {
+func getUserVideoList(list []common.View_video_favorites, user_id string) []common.View_video_favorites {
 
 	db := common.GetDB()
 	db.Preload("Author").Where("author_id = ?", user_id).Find(&list)
@@ -113,7 +113,7 @@ func Publish(c *gin.Context) {
 	////写入数据库视频信息
 	playUrl := common.BuilderString("/video/", videoName)
 	coverUrl := common.BuilderString("/img/", coverName)
-	db.Create(&common.Video{AuthorId: user.Id, Title: title, PlayUrl: playUrl, CoverUrl: coverUrl})
+	db.Create(&common.View_video_favorites{AuthorId: user.Id, Title: title, PlayUrl: playUrl, CoverUrl: coverUrl})
 
 	c.JSON(http.StatusOK, common.Response{
 		StatusCode: 0,
