@@ -8,7 +8,7 @@ import (
 var Dsn = "root:13824101958@tcp(localhost:3306)/godemo1" //你自己数据库dsn
 var mySigningKey = []byte("qwacdfafaefa.")               //你自己token加密解密的秘钥，可随便设置
 var SetTime int64 = 12 * 60 * 60 * 30                    //token过期时间
-var VideoUrl = "http://10.34.152.157:8083/"              //填写你本地资源的访问入口,我用的是nginx开启本地资源入口
+var VideoUrl = "http://10.34.134.223:8083/"              //填写你本地资源的访问入口,我用的是nginx开启本地资源入口
 //var VideoUrl = "http://10.31.46.13:8083/"                            //填写你本地资源的访问入口,我用的是nginx开启本地资源入口
 var LocalUrl = "D:\\GolandProjects\\github.com\\CaiNiaoTeam\\public" //填写你视频和视频封面的本地地址
 

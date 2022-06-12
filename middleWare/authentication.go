@@ -4,6 +4,7 @@ import (
 	"CaiNiaoTeam/common"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"net/http"
 	"time"
 )
 
@@ -40,6 +41,7 @@ func Authentication(c *gin.Context) {
 		}
 	} else {
 		fmt.Println("请求拒绝3")
+		c.JSON(http.StatusOK, common.Response{StatusCode: 0})
 		c.Abort()
 	}
 }
