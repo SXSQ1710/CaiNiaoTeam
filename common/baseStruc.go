@@ -31,10 +31,24 @@ type View_video_favorites struct {
 }
 
 type Comment struct {
-	Id         int64  `json:"id,omitempty"`
-	User       User   `json:"user"`
+	Id         int64 `json:"id,omitempty" ;gorm:"primary_key;AUTO_INCREMENT"`
+	UserId     int64
+	VideoId    int64
+	User       User   `json:"user" ;gorm:"foreignKey:UserId;references:Id;"`
 	Content    string `json:"content,omitempty"`
 	CreateDate string `json:"create_date,omitempty"`
+}
+
+type Favorite struct {
+	User_id  string `gorm:"primary_key"`
+	Video_id string `gorm:"primary_key"`
+}
+
+type Relation struct {
+	User_id        string `gorm:"primary_key"`
+	Follow_user_id string `gorm:"primary_key"`
+	Follow_user    User   `gorm:"foreignKey:Follow_user_id;references:Id;"` //被关在的人
+	Follower_user  User   `gorm:"foreignKey:User_id;references:Id;"`        //关注的人
 }
 
 type User struct {
@@ -52,9 +66,4 @@ func (video *View_video_favorites) SetPlayUrl(playUrl string) {
 
 func (video *View_video_favorites) SetCoverUrl(coverUrl string) {
 	video.CoverUrl = coverUrl
-}
-
-type Favorite struct {
-	User_id  string `gorm:"primary_key"`
-	Video_id string `gorm:"primary_key"`
 }

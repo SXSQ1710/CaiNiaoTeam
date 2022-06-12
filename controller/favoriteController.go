@@ -9,13 +9,26 @@ import (
 	"strconv"
 )
 
+type request_FavoriteList struct {
+	Token          string `form:"token" json:"token" binding:"omitempty"`
+	Select_user_id string `form:"user_id" json:"user_id" binding:"omitempty" ` //这里是查询的user_id
+}
+
 // FavoriteList all users have same favorite video list
 func FavoriteList(c *gin.Context) {
-	token := c.Query("token")
-	select_userId := c.Query("user_id")          //这里的user_id是查询用户的id
-	user_id := common.TokenParse(token).(string) //这里是用户自己的id
+	//token := c.Query("token")
+	//select_userId := c.Query("user_id") //这里的user_id是查询用户的id
+	respond := &request_FavoriteList{}
+	if err := c.ShouldBind(&respond); err != nil {
+		fmt.Println(err.Error())
+	}
 
-	userAllLikeVideo := getUserLikeVideoList(AllVideoList, select_userId, user_id)
+	if respond.Token == "" {
+		return
+	}
+	user_id := common.TokenParse(respond.Token).(string) //这里是用户自己的id
+
+	userAllLikeVideo := getUserLikeVideoList(AllVideoList, respond.Select_user_id, user_id)
 	c.JSON(http.StatusOK, VideoListResponse{
 		Response: common.Response{
 			StatusCode: 0,
@@ -43,8 +56,8 @@ func getUserLikeVideoList(list []common.View_video_favorites, select_userId stri
 		AllVideoMap[video.Id] = &list[i]
 	}
 
-	fmt.Println(list)
-	fmt.Println(favorite)
+	//fmt.Println(list)
+	//fmt.Println(favorite)
 
 	//这一步是将查看用户的所有喜欢视频中存在和用户一样喜欢的视频的IsFavorite标为true
 	//但结果发现他app里根本没做这项功能，我像一个小丑一样弄了好久(＠_＠)
