@@ -16,8 +16,7 @@ type request_FavoriteList struct {
 
 // FavoriteList all users have same favorite video list
 func FavoriteList(c *gin.Context) {
-	//token := c.Query("token")
-	//select_userId := c.Query("user_id") //这里的user_id是查询用户的id
+
 	respond := &request_FavoriteList{}
 	if err := c.ShouldBind(&respond); err != nil {
 		fmt.Println(err.Error())
@@ -37,7 +36,7 @@ func FavoriteList(c *gin.Context) {
 	})
 }
 
-// 获取用户所有喜欢的视频的视频列表
+// 获取用户喜欢的视频列表
 func getUserLikeVideoList(list []common.View_video_favorites, select_userId string, user_id string) []common.View_video_favorites {
 	sql := "SELECT v.id,v.author_id,v.play_url,v.cover_url,v.favorite_count,v.comment_count,v.is_favorite,v.title FROM view_video_favorites v,favorites f WHERE f.video_id = v.id AND f.user_id = ?"
 	db := common.GetDB()
@@ -46,7 +45,6 @@ func getUserLikeVideoList(list []common.View_video_favorites, select_userId stri
 		log.Println(err.Error())
 	}
 
-	//db.Preload("Author").Find(&list)
 	favorite := make([]common.Favorite, len(list))
 	db.Where("user_id = ?", user_id).Find(&favorite)
 	AllVideoMap := make(map[int64]*common.View_video_favorites, len(list))

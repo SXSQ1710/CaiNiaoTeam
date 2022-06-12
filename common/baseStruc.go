@@ -42,6 +42,7 @@ type Comment struct {
 type Favorite struct {
 	User_id  string `gorm:"primary_key"`
 	Video_id string `gorm:"primary_key"`
+	//Video    Video `gorm:"foreignKey:Video_id;references:Id;"`
 }
 
 type Relation struct {
