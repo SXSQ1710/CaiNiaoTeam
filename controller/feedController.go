@@ -47,8 +47,12 @@ func RefreshVideoList(list []common.View_video_favorites, user_id string) []comm
 // Feed same demo video list for every request
 func Feed(c *gin.Context) {
 	token := c.Query("token")
-	id := common.TokenParse(token).(string)
-	AllVideoList = RefreshVideoList(AllVideoList, id)
+	if token != "" {
+		id := common.TokenParse(token).(string)
+		AllVideoList = RefreshVideoList(AllVideoList, id)
+	} else {
+		AllVideoList = RefreshVideoList(AllVideoList, "0")
+	}
 	c.JSON(http.StatusOK, FeedResponse{
 		Response:  common.Response{StatusCode: 0},
 		VideoList: AllVideoList,

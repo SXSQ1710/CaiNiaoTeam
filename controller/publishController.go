@@ -113,7 +113,7 @@ func Publish(c *gin.Context) {
 	////写入数据库视频信息
 	playUrl := common.BuilderString("/video/", videoName)
 	coverUrl := common.BuilderString("/img/", coverName)
-	db.Create(&common.View_video_favorites{AuthorId: user.Id, Title: title, PlayUrl: playUrl, CoverUrl: coverUrl})
+	db.Create(&common.Video{AuthorId: user.Id, Title: title, PlayUrl: playUrl, CoverUrl: coverUrl})
 
 	c.JSON(http.StatusOK, common.Response{
 		StatusCode: 0,
@@ -127,6 +127,7 @@ func creatCover(videoName string, coverName string) {
 	coverLocalUrl := common.LocalUrl + "\\img\\" + coverName
 	fmt.Println(videoLocalUrl)
 	fmt.Println(coverLocalUrl)
+	//ffmpeg -i D:\GolandProjects\github.com\CaiNiaoTeam\public\video\10000_1.mp4 -ss 00:00:01 -t 1 -r 1 -q:v 2 -f image2 D:\GolandProjects\github.com\CaiNiaoTeam\public\video\10000_1.jpeg
 	cmdArguments := []string{"-i", videoLocalUrl, "-ss", "00:00:01", "-t", "1", "-r", "1", "-q:v", "2", "-f", "image2", coverLocalUrl}
 	cmd := exec.Command("ffmpeg", cmdArguments...)
 	var out bytes.Buffer
