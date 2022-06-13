@@ -18,7 +18,6 @@ type VideoListResponse struct {
 
 // PublishList all users have same publish video list
 func PublishList(c *gin.Context) {
-	//token := c.Query("token")    //这里发现token没啥用
 	userId := c.Query("user_id") //这里的user_id是查询用户的id
 
 	userAllVideo := getUserVideoList(AllVideoList, userId)
@@ -28,26 +27,6 @@ func PublishList(c *gin.Context) {
 		},
 		VideoList: userAllVideo,
 	})
-	//if len(token) != 0 {
-	//	id := common.TokenParse(token)
-	//	if id == userId { //身份验证通过
-	//		AllVideoList = getUserVideoList(AllVideoList, userId)
-	//		c.JSON(http.StatusOK, VideoListResponse{
-	//			Response: common.Response{
-	//				StatusCode: 0,
-	//			},
-	//			VideoList: AllVideoList,
-	//		})
-	//	} else {
-	//		c.JSON(http.StatusOK, UserResponse{
-	//			Response: common.Response{StatusCode: 1, StatusMsg: "用户信息错误！"},
-	//		})
-	//	}
-	//} else {
-	//	c.JSON(http.StatusOK, UserResponse{
-	//		Response: common.Response{StatusCode: 1, StatusMsg: "用户信息错误！"},
-	//	})
-	//}
 }
 
 // 获取用户所有发布视频的视频列表
@@ -100,9 +79,12 @@ func Publish(c *gin.Context) {
 	unixTime := time.Now().Unix()
 
 	videoName := fmt.Sprintf("%d_%d_%s", user.Id, unixTime, filename) //拼接视频名称:用户id+上传时间+文件名
-	saveFile := filepath.Join("./public/video/", videoName)           //存储视频到本机上
-	coverName := fmt.Sprintf("%d_%d.jpeg", user.Id, unixTime)         //拼接视频封面名称:用户id+上传时间+".jpeg"
-	defer creatCover(videoName, coverName)                            //使用ffmpeg截取视频生成封面
+	go func() {
+
+	}()
+	saveFile := filepath.Join("./public/video/", videoName)   //存储视频到本机上
+	coverName := fmt.Sprintf("%d_%d.jpeg", user.Id, unixTime) //拼接视频封面名称:用户id+上传时间+".jpeg"
+	defer creatCover(videoName, coverName)                    //使用ffmpeg截取视频生成封面
 	if err := c.SaveUploadedFile(data, saveFile); err != nil {
 		c.JSON(http.StatusOK, common.Response{
 			StatusCode: 1,

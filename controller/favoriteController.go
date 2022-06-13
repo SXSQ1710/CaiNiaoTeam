@@ -23,6 +23,15 @@ func FavoriteList(c *gin.Context) {
 	}
 
 	if respond.Token == "" {
+
+		userAllLikeVideo := getLikeVideoList(AllVideoList, respond.Select_user_id)
+		c.JSON(http.StatusOK, VideoListResponse{
+			Response: common.Response{
+				StatusCode: 0,
+			},
+			VideoList: userAllLikeVideo,
+		})
+
 		return
 	}
 	user_id := common.TokenParse(respond.Token).(string) //这里是用户自己的id
@@ -36,7 +45,7 @@ func FavoriteList(c *gin.Context) {
 	})
 }
 
-// 获取用户喜欢的视频列表
+// 获取查询用户喜欢的视频列表并整合自己是否喜欢
 func getUserLikeVideoList(list []common.View_video_favorites, select_userId string, user_id string) []common.View_video_favorites {
 	sql := "SELECT v.id,v.author_id,v.play_url,v.cover_url,v.favorite_count,v.comment_count,v.is_favorite,v.title FROM view_video_favorites v,favorites f WHERE f.video_id = v.id AND f.user_id = ?"
 	db := common.GetDB()
@@ -44,7 +53,7 @@ func getUserLikeVideoList(list []common.View_video_favorites, select_userId stri
 	if err := db.Preload("Author").Raw(sql, select_userId).Scan(&list).Error; err != nil {
 		log.Println(err.Error())
 	}
-
+	fmt.Println(list)
 	favorite := make([]common.Favorite, len(list))
 	db.Where("user_id = ?", user_id).Find(&favorite)
 	AllVideoMap := make(map[int64]*common.View_video_favorites, len(list))
@@ -68,6 +77,27 @@ func getUserLikeVideoList(list []common.View_video_favorites, select_userId stri
 			fmt.Println(video_id_Int)
 			AllVideoMap[video_id_Int].IsFavorite = true
 		}
+	}
+
+	return list
+}
+
+// 获取查询用户喜欢的视频列表
+func getLikeVideoList(list []common.View_video_favorites, select_userId string) []common.View_video_favorites {
+	sql := "SELECT v.id,v.author_id,v.play_url,v.cover_url,v.favorite_count,v.comment_count,v.is_favorite,v.title FROM view_video_favorites v,favorites f WHERE f.video_id = v.id AND f.user_id = ?"
+	db := common.GetDB()
+
+	if err := db.Preload("Author").Raw(sql, select_userId).Scan(&list).Error; err != nil {
+		log.Println(err.Error())
+	}
+
+	favorite := make([]common.Favorite, len(list))
+	db.Where("user_id = ?", select_userId).Find(&favorite)
+	AllVideoMap := make(map[int64]*common.View_video_favorites, len(list))
+	for i, video := range list {
+		list[i].PlayUrl = VideoUrl + "public" + video.PlayUrl   //拼接视频真正的访问路径，
+		list[i].CoverUrl = VideoUrl + "public" + video.CoverUrl //如"http://10.34.152.157:8083/"+"public"+"/img/1.jpg"
+		AllVideoMap[video.Id] = &list[i]
 	}
 
 	return list
