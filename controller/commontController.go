@@ -48,8 +48,9 @@ func CommentAction(c *gin.Context) {
 
 			c.JSON(http.StatusOK, CommentActionResponse{Response: common.Response{StatusCode: 0},
 				Comment: comment})
-		case 2: //删除评论，app为开发
-			//db.Delete(&comment)
+		case 2: //删除评论，
+			db.Where("id = ?", respond.CommentID).Delete(&comment)
+			c.JSON(http.StatusOK, common.Response{StatusCode: 0})
 		default:
 			fmt.Println("action_type错误！")
 		}
