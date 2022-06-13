@@ -12,4 +12,4 @@ ffmpeg使用：[下载教程](https://www.jianshu.com/p/f1d130ce2864)  ||
 ---
 ### 个人开发，功能全部实现，遇到问题摆大烂  ,我来给大家当分母 
 ### 特别感谢：[kwetx](https://github.com/kwetx)  协助测试开发    
-![](D:\huyi\文档\微信图片_20220613104447.jpg)
+![](https://github.com/SXSQ1710/CaiNiaoTeam/tree/master/public/img/1.jpg)
